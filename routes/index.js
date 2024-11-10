@@ -86,7 +86,7 @@ router.post('/solicitacao', upload.single('documento'), (req, res) => {
   };
 
   solicitacoes.push(newSolicitacao);
-  res.send('Solicitação enviada');
+  res.redirect('perfil');
 });
 
 // Perfil do Aluno
