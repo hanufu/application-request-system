@@ -3,7 +3,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var multer = require('multer'); // Importando o multer para upload de arquivos
 
 // Importando as rotas do arquivo único
 var indexRouter = require('./routes/index');

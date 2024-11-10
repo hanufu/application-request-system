@@ -1,19 +1,169 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Aluno</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <style>
+        /* Estilos internos para a página */
+        :root {
+            --primary-color: #3A78BC;
+            --secondary-color: #6A98D0;
+            --accent-color: #F4B400;
+            --background-color: #f4f7fa;
+            --text-color: #333333;
+            --input-border-color: #cccccc;
+            --button-color: #3A78BC;
+            --button-hover-color: #2a5f96;
+            --header-bg-color: #ffffff;
+            --card-bg-color: #ffffff;
+            --card-shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: var(--header-bg-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px var(--card-shadow);
+        }
+
+        /* Cabeçalho */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        .logout-btn {
+            color: #fff;
+            background-color: var(--button-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--button-hover-color);
+        }
+
+        /* Seção de Solicitações */
+        .solicitacoes {
+            margin-top: 30px;
+        }
+
+        .solicitacoes h2 {
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .status-card {
+            background-color: var(--card-bg-color);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px var(--card-shadow);
+            margin-bottom: 15px;
+        }
+
+        .status-card h3 {
+            font-size: 18px;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .status-card p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .status-card p span {
+            font-weight: bold;
+        }
+
+        .btn-solicitar {
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-solicitar:hover {
+            background-color: #f4a300;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: #fff;
+            margin-top: 40px;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Perfil do Aluno</h1>
-        <h2>Minhas Solicitações de Dispensa</h2>
-        <div class="status-card">
-            <h2>Solicitação #1</h2>
-            <p>Status: Aprovada</p>
-            <p>Comentário: Dispensa aprovada para curso X.</p>
-        </div>
-        <!-- Outras solicitações aqui -->
+        <!-- Cabeçalho -->
+        <header>
+            <h1>Bem-vindo, <%= user.nome %></h1>
+            <a href="/logout" class="logout-btn">Sair</a>
+        </header>
+
+        <!-- Seção de Solicitações -->
+        <section class="solicitacoes">
+            <h2>Minhas Solicitações de Dispensa</h2>
+
+            <!-- Verificando se o usuário tem solicitações -->
+            <% if (solicitacoes && solicitacoes.length > 0) { %>
+                <% solicitacoes.forEach(function(solicitacao) { %>
+                    <div class="status-card">
+                        <h3>Solicitação #<%= solicitacao.id %></h3>
+                        <p><span>Status:</span> <%= solicitacao.status %></p>
+                        <p><span>Comentário:</span> <%= solicitacao.comentario %></p>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>Você ainda não possui solicitações.</p>
+            <% } %>
+
+            <!-- Botão para fazer uma nova solicitação -->
+            <a href="/solicitacao" class="btn-solicitar">Fazer Nova Solicitação</a>
+        </section>
     </div>
+
+    <footer>
+        <p>&copy; 2024 Sistema de Solicitações - Todos os direitos reservados.</p>
+    </footer>
 </body>
 </html>
