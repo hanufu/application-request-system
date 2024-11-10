@@ -6,8 +6,8 @@ const router = express.Router();
 // Definição dos arrays em memória para usuários e solicitações
 let users = [];
 let solicitacoes = [];
-const newUser = { id: users.length + 1, name: "ADM", email: "eduardo20003131@gmail.com", matricula: "24127", password: "123" };
-users.push(newUser);
+const ADM = { id: users.length + 1, name: "Administrador", email: "admin@gmail.com", matricula: "000000", password: "admin123" };
+
 
 // Configuração do Multer para upload de arquivos
 const storage = multer.memoryStorage(); // Usando armazenamento em memória
@@ -28,16 +28,24 @@ router.get('/', (req, res) => {
 // Processar login
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
-  const user = users.find(u => u.email === email && u.password === password);
 
+  // Verifica se o usuário é o administrador
+  if (email === ADM.email && password === ADM.password) {
+    req.session.user = ADM; // Armazena o usuário admin na sessão
+    return res.redirect('/admin'); // Redireciona para a página de admin
+  }
+
+  // Verifica se é um usuário comum
+  const user = users.find(u => u.email === email && u.password === password);
   if (user) {
-    req.session.user = user;
-    return res.redirect('/perfil'); // Redirecionar para o perfil do usuário
+    req.session.user = user; // Armazena o usuário na sessão
+    return res.redirect('/perfil'); // Redireciona para o perfil do usuário
   } else {
     req.session.error = 'Credenciais inválidas';
     return res.redirect('/'); // Redireciona de volta para a página de login
   }
 });
+
 
 // Página de cadastro
 router.get('/cadastro', (req, res) => {
