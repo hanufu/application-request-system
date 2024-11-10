@@ -21,7 +21,6 @@
             --success-color: #5cb85c;
         }
 
-        /* Reset básico */
         * {
             margin: 0;
             padding: 0;
@@ -44,7 +43,6 @@
             box-shadow: 0 4px 8px var(--card-shadow);
         }
 
-        /* Cabeçalho */
         header {
             display: flex;
             justify-content: space-between;
@@ -73,7 +71,6 @@
             background-color: var(--button-hover-color);
         }
 
-        /* Seção de Solicitações */
         .solicitacoes {
             margin-top: 20px;
         }
@@ -136,7 +133,6 @@
             background-color: #d43f3a;
         }
 
-        /* Botão para fazer nova solicitação */
         .btn-new-solicitacao {
             display: inline-block;
             margin-top: 20px;
@@ -154,7 +150,6 @@
             background-color: #f4a300;
         }
 
-        /* Rodapé */
         footer {
             text-align: center;
             padding: 20px;
@@ -164,7 +159,6 @@
             border-radius: 8px;
         }
 
-        /* Responsividade */
         @media (max-width: 768px) {
             th, td {
                 padding: 8px;
@@ -202,8 +196,8 @@
                     <% if (solicitacoes && solicitacoes.length > 0) { %>
                         <% solicitacoes.forEach(function(solicitacao) { %>
                             <tr>
-                                <td><%= solicitacao.user.name %></td>
-                                <td><%= solicitacao.user.matricula %></td>
+                                <td><%= solicitacao.user ? solicitacao.user.name : 'N/A' %></td>
+                                <td><%= solicitacao.user ? solicitacao.user.matricula : 'N/A' %></td>
                                 <td>
                                     <% if (solicitacao.documento) { %>
                                         <a href="data:application/octet-stream;base64,<%= solicitacao.documento.toString('base64') %>" download="documento_<%= solicitacao.id %>">Download</a>
@@ -211,8 +205,8 @@
                                         N/A
                                     <% } %>
                                 </td>
-                                <td><%= solicitacao.justificativa %></td>
-                                <td><%= solicitacao.status %></td>
+                                <td><%= solicitacao.justificativa || 'N/A' %></td>
+                                <td><%= solicitacao.status || 'N/A' %></td>
                                 <td class="action-buttons">
                                     <% if (solicitacao.status === 'Pendente') { %>
                                         <form action="/admin/solicitacao/<%= solicitacao.id %>" method="POST">
@@ -235,6 +229,7 @@
                         </tr>
                     <% } %>
                 </tbody>
+                
             </table>
         </section>
     </div>

@@ -6,8 +6,9 @@ const router = express.Router();
 // Definição dos arrays em memória para usuários e solicitações
 let users = [];
 let solicitacoes = [];
-  const newUser = { id: users.length + 1, name: "ADM", email: "eduardo20003131@gmail.com", matricula:"24127", password: "123"};
-  users.push(newUser);
+const newUser = { id: users.length + 1, name: "ADM", email: "eduardo20003131@gmail.com", matricula: "24127", password: "123" };
+users.push(newUser);
+
 // Configuração do Multer para upload de arquivos
 const storage = multer.memoryStorage(); // Usando armazenamento em memória
 const upload = multer({ storage: storage });
@@ -21,7 +22,7 @@ router.use(session({
 
 // Página inicial - Login
 router.get('/', (req, res) => {
-  res.render('index'); 
+  res.render('index');
 });
 
 // Processar login
@@ -40,7 +41,7 @@ router.post('/login', (req, res) => {
 
 // Página de cadastro
 router.get('/cadastro', (req, res) => {
-  res.render('cadastro'); 
+  res.render('cadastro');
 });
 
 // Processar o cadastro de novos usuários
@@ -74,19 +75,23 @@ router.get('/solicitacao', (req, res) => {
 
 // Processar solicitação de dispensa
 router.post('/solicitacao', upload.single('documento'), (req, res) => {
-  const { name, email, matricula, justificativa } = req.body;
+  if (!req.session.user) {
+    return res.redirect('/'); // Redireciona para o login se o usuário não estiver autenticado
+  }
+
+  const { justificativa } = req.body;
   const documento = req.file ? req.file.buffer : null; // Armazenando o arquivo na memória
 
   const newSolicitacao = {
     id: solicitacoes.length + 1,
-    user: { name, email, matricula },
+    userId: req.session.user.id, // Associando a solicitação ao id do usuário logado
     justificativa,
     documento,
     status: 'Pendente'
   };
 
   solicitacoes.push(newSolicitacao);
-  res.redirect('perfil');
+  res.redirect('/perfil');
 });
 
 // Perfil do Aluno
@@ -96,7 +101,8 @@ router.get('/perfil', (req, res) => {
   }
 
   const user = req.session.user; // Pega o usuário da sessão
-  res.render('perfil', { user, solicitacoes }); // Envia os dados do usuário e solicitações para a página
+  const userSolicitacoes = solicitacoes.filter(solicitacao => solicitacao.userId === user.id); // Filtra solicitações do usuário
+  res.render('perfil', { user, solicitacoes: userSolicitacoes }); // Envia os dados do usuário e suas solicitações para a página
 });
 
 // Página de Administração
