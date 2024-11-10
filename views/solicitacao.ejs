@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Solicitação de Dispensa</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Solicitação de Dispensa</h1>
+        <form action="/users/solicitacao" method="POST" enctype="multipart/form-data">
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="matricula">Matrícula</label>
+            <input type="text" id="matricula" name="matricula" required>
+
+            <label for="justificativa">Justificativa</label>
+            <textarea id="justificativa" name="justificativa" required></textarea>
+
+            <label for="documento">Upload de Ementa (.pdf)</label>
+            <input type="file" id="documento" name="documento" accept=".pdf" required>
+
+            <button type="submit">Enviar Solicitação</button>
+        </form>
+    </div>
+</body>
+</html>

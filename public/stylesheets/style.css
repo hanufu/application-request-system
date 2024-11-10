@@ -1,8 +1,137 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/* Definindo a paleta de cores */
+:root {
+  --primary-color: #3A78BC;
+  --secondary-color: #6A98D0;
+  --accent-color: #F4B400;
+  --background-color: #f4f7fa;
+  --text-color: #333333;
+  --input-border-color: #cccccc;
+  --button-color: #3A78BC;
+  --button-hover-color: #2a5f96;
 }
 
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.container {
+  width: 90%;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Título da página */
+h1 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+/* Formulário */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 10px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+input, textarea {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+input[type="file"] {
+  padding: 5px;
+}
+
+button {
+  padding: 12px;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: var(--button-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: var(--button-hover-color);
+}
+
+/* Links */
 a {
-  color: #00B7FF;
+  color: var(--primary-color);
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  text-align: center;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Tabela para a listagem de solicitações */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+td {
+  background-color: #f9f9f9;
+}
+
+/* Alinhamento e layout dos cards de status */
+.status-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color);
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+}
+.status-card h2 {
+  color: var(--secondary-color);
+}
+.status-card p {
+  margin: 5px 0;
 }
