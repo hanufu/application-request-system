@@ -8,6 +8,10 @@
 </head>
 <body>
     <div class="container">
+        <% if (error) { %>
+            <p style="color: red;">Informe os dados corretos ou crie uma conta.</p>
+          <% } %>
+          
         <form action="/login" method="POST">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required>

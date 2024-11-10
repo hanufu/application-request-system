@@ -8,7 +8,6 @@ let users = [];
 let solicitacoes = [];
 const ADM = { id: users.length + 1, name: "Administrador", email: "admin@gmail.com", matricula: "000000", password: "admin123" };
 
-
 // Configuração do Multer para upload de arquivos
 const storage = multer.memoryStorage(); // Usando armazenamento em memória
 const upload = multer({ storage: storage });
@@ -22,7 +21,9 @@ router.use(session({
 
 // Página inicial - Login
 router.get('/', (req, res) => {
-  res.render('index');
+  const error = req.session.error; // Salva o erro antes de limpar
+  req.session.error = null; // Limpa o erro imediatamente após ler
+  res.render('index', { error }); // Passa o erro para o template
 });
 
 // Processar login
@@ -46,12 +47,12 @@ router.post('/login', (req, res) => {
   }
 });
 
-
 // Página de cadastro
 router.get('/cadastro', (req, res) => {
-  res.render('cadastro');
+  const error = req.session.error; 
+  req.session.error = null; 
+  res.render('cadastro', { error }); 
 });
-
 // Processar o cadastro de novos usuários
 router.post('/register', (req, res) => {
   const { name, email, matricula, password } = req.body;
@@ -63,7 +64,7 @@ router.post('/register', (req, res) => {
 
   const newUser = { id: users.length + 1, name, email, matricula, password };
   users.push(newUser);
-  res.redirect('/');
+  res.redirect('/'); // Redireciona para a página de login após cadastro
 });
 
 // Logout

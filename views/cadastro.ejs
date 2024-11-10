@@ -7,6 +7,10 @@
 <body>
     <div class="container">
         <h1>Cadastro</h1>
+        <% if (error) { %>
+            <p style="color: red;">O usuário já existe no sistema</p>
+          <% } %>
+          
         <form action="/register" method="POST">
             <label for="name">Nome</label>
             <input type="text" id="name" name="name" required>
