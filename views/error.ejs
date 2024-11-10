@@ -1,3 +1,102 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro - Página Não Encontrada</title>
+    <style>
+        /* Variáveis de cor */
+        :root {
+            --primary-color: #3A78BC;
+            --error-color: #D9534F;
+            --background-color: #f4f7fa;
+            --text-color: #333333;
+            --card-background: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .error-container {
+            background-color: var(--card-background);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: var(--error-color);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        pre {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            text-align: left;
+            margin-top: 20px;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            background-color: #2a5f96;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <!-- Mensagem de erro principal -->
+        <h1><%= message %></h1>
+
+        <!-- Código de status do erro -->
+        <h2>Status: <%= error.status %></h2>
+
+        <!-- Stack trace do erro -->
+        <pre><%= error.stack %></pre>
+
+        <!-- Link para voltar à página inicial -->
+        <a href="/" class="back-link">Voltar à Página Inicial</a>
+    </div>
+</body>
+</html>

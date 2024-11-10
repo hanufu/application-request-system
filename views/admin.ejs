@@ -1,35 +1,246 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Administração</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <style>
+        :root {
+            --primary-color: #3A78BC;
+            --secondary-color: #6A98D0;
+            --accent-color: #F4B400;
+            --background-color: #f4f7fa;
+            --text-color: #333333;
+            --input-border-color: #cccccc;
+            --button-color: #3A78BC;
+            --button-hover-color: #2a5f96;
+            --header-bg-color: #ffffff;
+            --card-bg-color: #ffffff;
+            --card-shadow: rgba(0, 0, 0, 0.1);
+            --error-color: #D9534F;
+            --success-color: #5cb85c;
+        }
+
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: var(--header-bg-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px var(--card-shadow);
+        }
+
+        /* Cabeçalho */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        .logout-btn {
+            color: #fff;
+            background-color: var(--button-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--button-hover-color);
+        }
+
+        /* Seção de Solicitações */
+        .solicitacoes {
+            margin-top: 20px;
+        }
+
+        .solicitacoes h2 {
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .action-buttons form {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .action-buttons button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .action-buttons .approve-btn {
+            background-color: var(--success-color);
+        }
+
+        .action-buttons .approve-btn:hover {
+            background-color: #4cae4c;
+        }
+
+        .action-buttons .reject-btn {
+            background-color: var(--error-color);
+        }
+
+        .action-buttons .reject-btn:hover {
+            background-color: #d43f3a;
+        }
+
+        /* Botão para fazer nova solicitação */
+        .btn-new-solicitacao {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background-color: var(--accent-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-new-solicitacao:hover {
+            background-color: #f4a300;
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: #fff;
+            margin-top: 40px;
+            border-radius: 8px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            th, td {
+                padding: 8px;
+            }
+
+            .logout-btn, .btn-new-solicitacao {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Página de Administração</h1>
-        <h2>Solicitações de Dispensa</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Matrícula</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Aluno Exemplo</td>
-                    <td>123456</td>
-                    <td>Pendente</td>
-                    <td>
-                        <button>Aprovar</button>
-                        <button>Rejeitar</button>
-                    </td>
-                </tr>
-                <!-- Outras solicitações aqui -->
-            </tbody>
-        </table>
+        <header>
+            <h1>Página de Administração</h1>
+            <a href="/logout" class="logout-btn">Sair</a>
+        </header>
+
+        <section class="solicitacoes">
+            <h2>Solicitações de Dispensa</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Matrícula</th>
+                        <th>Arquivo</th>
+                        <th>Descrição</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (solicitacoes && solicitacoes.length > 0) { %>
+                        <% solicitacoes.forEach(function(solicitacao) { %>
+                            <tr>
+                                <td><%= solicitacao.user.name %></td>
+                                <td><%= solicitacao.user.matricula %></td>
+                                <td>
+                                    <% if (solicitacao.documento) { %>
+                                        <a href="data:application/octet-stream;base64,<%= solicitacao.documento.toString('base64') %>" download="documento_<%= solicitacao.id %>">Download</a>
+                                    <% } else { %>
+                                        N/A
+                                    <% } %>
+                                </td>
+                                <td><%= solicitacao.justificativa %></td>
+                                <td><%= solicitacao.status %></td>
+                                <td class="action-buttons">
+                                    <% if (solicitacao.status === 'Pendente') { %>
+                                        <form action="/admin/solicitacao/<%= solicitacao.id %>" method="POST">
+                                            <input type="hidden" name="status" value="Aprovada">
+                                            <button type="submit" class="approve-btn">Aprovar</button>
+                                        </form>
+                                        <form action="/admin/solicitacao/<%= solicitacao.id %>" method="POST">
+                                            <input type="hidden" name="status" value="Rejeitada">
+                                            <button type="submit" class="reject-btn">Rejeitar</button>
+                                        </form>
+                                    <% } else { %>
+                                        N/A
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="6">Não há solicitações para exibir.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </section>
     </div>
+
+    <footer>
+        <p>&copy; 2024 Sistema de Solicitações - Todos os direitos reservados.</p>
+    </footer>
 </body>
 </html>
