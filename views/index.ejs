@@ -1,12 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
     <div class="container">
         <h1>Login</h1>
+
+        <!-- Verificar se há erros de login e exibir uma mensagem -->
+        <% if (error) { %>
+            <div class="error-message">
+                <p><%= error %></p>
+            </div>
+        <% } %>
+
         <form action="/login" method="POST">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required>
@@ -16,6 +26,7 @@
 
             <button type="submit">Entrar</button>
         </form>
+
         <a href="/cadastro">Não tem uma conta? Cadastre-se</a>
     </div>
 </body>
