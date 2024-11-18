@@ -133,13 +133,12 @@
 </head>
 <body>
     <div class="container">
-        <!-- Cabeçalho -->
+
         <header>
             <h1>Bem-vindo, <%= user.name %></h1>
             <a href="/logout" class="logout-btn">Sair</a>
         </header>
 
-        <!-- Seção de Solicitações -->
         <section class="solicitacoes">
             <h2>Minhas Solicitações de Dispensa</h2>
 
@@ -156,7 +155,6 @@
                 <p>Você ainda não possui solicitações.</p>
             <% } %>
 
-            <!-- Botão para fazer uma nova solicitação -->
             <a href="/solicitacao" class="btn-solicitar">Fazer Nova Solicitação</a>
         </section>
     </div>
