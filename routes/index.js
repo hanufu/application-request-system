@@ -9,21 +9,20 @@ let solicitacoes = [];
 const ADM = { id: users.length + 1, name: "Administrador", email: "admin@gmail.com", matricula: "000000", password: "admin123" };
 
 // Configuração do Multer para upload de arquivos
-const storage = multer.memoryStorage(); // Usando armazenamento em memória
+const storage = multer.memoryStorage(); 
 const upload = multer({ storage: storage });
 
-// Middleware de sessão (deve ser colocado antes de qualquer uso de req.session)
 router.use(session({
-  secret: 'meuSegredo', // Troque por um valor seguro
+  secret: 'meuSegredo', 
   resave: false,
   saveUninitialized: true
 }));
 
 // Página inicial - Login
 router.get('/', (req, res) => {
-  const error = req.session.error; // Salva o erro antes de limpar
-  req.session.error = null; // Limpa o erro imediatamente após ler
-  res.render('index', { error }); // Passa o erro para o template
+  const error = req.session.error; 
+  req.session.error = null;
+  res.render('index', { error }); 
 });
 
 // Processar login
@@ -32,18 +31,18 @@ router.post('/login', (req, res) => {
 
   // Verifica se o usuário é o administrador
   if (email === ADM.email && password === ADM.password) {
-    req.session.user = ADM; // Armazena o usuário admin na sessão
-    return res.redirect('/admin'); // Redireciona para a página de admin
+    req.session.user = ADM; 
+    return res.redirect('/admin');
   }
 
   // Verifica se é um usuário comum
   const user = users.find(u => u.email === email && u.password === password);
   if (user) {
-    req.session.user = user; // Armazena o usuário na sessão
-    return res.redirect('/perfil'); // Redireciona para o perfil do usuário
+    req.session.user = user; 
+    return res.redirect('/perfil'); 
   } else {
     req.session.error = 'Credenciais inválidas';
-    return res.redirect('/'); // Redireciona de volta para a página de login
+    return res.redirect('/'); 
   }
 });
 
@@ -64,7 +63,7 @@ router.post('/register', (req, res) => {
 
   const newUser = { id: users.length + 1, name, email, matricula, password };
   users.push(newUser);
-  res.redirect('/'); // Redireciona para a página de login após cadastro
+  res.redirect('/');
 });
 
 // Logout
@@ -73,7 +72,7 @@ router.get('/logout', (req, res) => {
     if (err) {
       return res.send('Erro ao sair');
     }
-    res.redirect('/'); // Redireciona para a página de login após logout
+    res.redirect('/');
   });
 });
 
@@ -85,15 +84,15 @@ router.get('/solicitacao', (req, res) => {
 // Processar solicitação de dispensa
 router.post('/solicitacao', upload.single('documento'), (req, res) => {
   if (!req.session.user) {
-    return res.redirect('/'); // Redireciona para o login se o usuário não estiver autenticado
+    return res.redirect('/'); 
   }
 
   const { justificativa } = req.body;
-  const documento = req.file ? req.file.buffer : null; // Armazenando o arquivo na memória
+  const documento = req.file ? req.file.buffer : null; 
 
   const newSolicitacao = {
     id: solicitacoes.length + 1,
-    userId: req.session.user.id, // Associando a solicitação ao id do usuário logado
+    userId: req.session.user.id, 
     justificativa,
     documento,
     status: 'Pendente'
@@ -106,12 +105,12 @@ router.post('/solicitacao', upload.single('documento'), (req, res) => {
 // Perfil do Aluno
 router.get('/perfil', (req, res) => {
   if (!req.session.user) {
-    return res.redirect('/'); // Redireciona para o login se não houver sessão de usuário
+    return res.redirect('/'); 
   }
 
-  const user = req.session.user; // Pega o usuário da sessão
-  const userSolicitacoes = solicitacoes.filter(solicitacao => solicitacao.userId === user.id); // Filtra solicitações do usuário
-  res.render('perfil', { user, solicitacoes: userSolicitacoes }); // Envia os dados do usuário e suas solicitações para a página
+  const user = req.session.user;
+  const userSolicitacoes = solicitacoes.filter(solicitacao => solicitacao.userId === user.id); 
+  res.render('perfil', { user, solicitacoes: userSolicitacoes }); 
 });
 
 // Página de Administração
